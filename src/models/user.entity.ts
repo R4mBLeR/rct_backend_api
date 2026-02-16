@@ -8,6 +8,6 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
-  telegramId: string;
+  @Column({ type: 'varchar', nullable: true })
+  telegramId?: string | null;
 }

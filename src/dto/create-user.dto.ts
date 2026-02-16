@@ -1,4 +1,4 @@
-import { IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
@@ -7,14 +7,14 @@ export class CreateUserDto {
     required: true,
   })
   @IsString({ message: 'Email must be a string' })
-  @MinLength(3, { message: 'Email must be minimal 3 chars' })
-  @MaxLength(64, { message: 'Email must be maximum 64 chars' })
+  @IsEmail({}, { message: 'Email address must be a valid email address' })
   email: string;
 
   @ApiProperty({
-    example: 0,
-    required: true,
+    example: '100',
+    required: false,
+    type: String,
   })
   @IsString({ message: 'Telegram id must be a string' })
-  id: string;
+  id: string | null;
 }

@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { AppModule } from './modules/app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 const envPath = path.resolve(process.cwd(), '.env');
 console.log(`📁 Loading .env from: ${envPath}`);
@@ -18,6 +19,13 @@ console.log(`   API_PREFIX: ${process.env.API_PREFIX || 'not set'}`);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      stopAtFirstError: true,
+      whitelist: true,
+      transform: true,
+    }),
+  );
   const configService: ConfigService = app.get(ConfigService);
 
   app.enableCors();
